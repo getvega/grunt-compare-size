@@ -38,5 +38,8 @@
     "grunt-contrib-watch": "0.3.1",
     "gzip-js": "0.3.1"
   },
-  "keywords": []
+  "keywords": [],
+  "dependencies": {
+    "filesize": "~2.0.0"
+  }
 }

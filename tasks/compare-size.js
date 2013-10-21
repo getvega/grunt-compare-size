@@ -11,7 +11,8 @@
 
 "use strict";
 
-var fs = require("fs");
+var fs = require("fs"),
+    fsStringify = require("filesize");
 
 module.exports = function(grunt) {
   // Grunt utilities & task-wide assignments
@@ -206,7 +207,7 @@ module.exports = function(grunt) {
         availableWidth = 79,
         columns = prefixes.map(function( label ) {
           // Ensure width for the label and 6-character sizes, plus a padding space
-          return Math.max( label.length + 1, 7 );
+          return Math.max( label.length + 1, 12 );
         }),
 
         // Right-align headers
@@ -230,7 +231,8 @@ module.exports = function(grunt) {
 
         // Raw sizes
         log.writetableln( columns, prefixes.map(function( prefix, i ) {
-          return utils._.lpad( newsizes[ explicitFile ][ prefix ], columns[ i ] - 1 );
+          var filesize = newsizes[ explicitFile ][ prefix ];
+          return utils._.lpad( fsStringify(filesize), columns[ i ] - 1 );
         }).concat( explicitFile ) );
 
         // Comparisons
@@ -249,7 +251,8 @@ module.exports = function(grunt) {
         files.forEach(function( key ) {
           log.writetableln( columns,
             prefixes.map(function( prefix, i ) {
-              return utils._.lpad( newsizes[ key ][ prefix ], columns[ i ] - 1 );
+              var filesize = newsizes[ key ][ prefix ];
+              return utils._.lpad( fsStringify(filesize), columns[ i ] - 1 );
             }).concat( key + "" )
           );
         });
